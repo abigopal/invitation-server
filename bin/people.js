@@ -31,12 +31,15 @@ for (var i in people_list) {
   var key = shasum.digest('hex');
   person.key = key;
 
-  client.set('id_' + person.key, person.email);
-  client.lpush('awaiting', person.first_name + ' ' + person.last_name);
+  var name = person.first_name + ' ' + person.last_name;
+
+  client.set('invitation_id_' + person.key, person.email);
+  client.set('invitation_email_' + person.email, name);
+  client.sadd('invitation_awaiting', name);
 
   people.push(person);
 }
 
 fs.writeFileSync('../output.txt', JSON.stringify(people));
 
-client.end();
+client.quit();
