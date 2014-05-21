@@ -1,0 +1,6 @@
+config.js
+node_modules/
+*.sw*
+.DS_Store
+guests.txt
+output.txt
