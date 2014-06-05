@@ -4,3 +4,6 @@ node_modules/
 .DS_Store
 guests.txt
 output.txt
+npm-debug.log
+output.json
+db.js

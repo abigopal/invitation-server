@@ -1,7 +1,7 @@
 var fs = require('fs');
 var crypto = require('crypto');
-var redis = require('redis');
 var config = require('../config');
+var redis = require('redis');
 
 var client = redis.createClient();
 
@@ -40,6 +40,6 @@ for (var i in people_list) {
   people.push(person);
 }
 
-fs.writeFileSync('../output.txt', JSON.stringify(people));
+fs.writeFileSync('../output.json', JSON.stringify(people));
 
 client.quit();
