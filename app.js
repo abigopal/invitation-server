@@ -22,8 +22,9 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
-// app.get('/', routes.index);
 app.get('/invite/:id', router.invite);
+app.post('/invite/accept/:id', router.accept);
+app.post('/invite/decline/:id', router.decline);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {

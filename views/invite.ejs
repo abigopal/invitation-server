@@ -6,7 +6,49 @@
   </head>
   <body>
     <p> 
-      <%= id %> 
+      <form action='/invite/accept/<%= id %>' method='post'>
+        <input type='Submit' value='Accept' />
+      </form>
+
+      <h2> Attending </h2>
+      <table>
+        <% for( var i = 0; i < attending.length; i += 3 ) { %>
+          <tr> 
+            <% for( var j = i; j < i + 3; j++ ) { %>
+              <% if ( attending[j] != null ) {  %>
+                <td><%= attending[j] %></td>
+              <% }; %>
+            <% }; %>
+          </tr>
+        <% }; %> 
+     </table>
+
+      <h2> Declined </h2>
+      <table>
+        <% for( var i = 0; i < declined.length; i += 3 ) { %>
+          <tr> 
+            <% for( var j = i; j < i + 3; j++ ) { %>
+              <% if ( declined[j] != null ) {  %>
+                <td><%= declined[j] %></td>
+              <% }; %>
+            <% }; %>
+          </tr>
+        <% }; %> 
+     </table>
+
+     <h2> Awaiting </h2>
+      <table>
+        <% for( var i = 0; i < awaiting.length; i += 3 ) { %>
+          <tr> 
+            <% for( var j = i; j < i + 3; j++ ) { %>
+              <% if ( awaiting[j] != null ) {  %>
+                <td><%= awaiting[j] %></td>
+              <% }; %>
+            <% }; %>
+          </tr>
+        <% }; %> 
+     </table>
+
     </p> 
   </body>
 </html>

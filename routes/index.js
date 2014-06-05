@@ -5,8 +5,10 @@ exports.guestlist = function(req, res) {
   var url = req.params.id;
 };
 
-exports.join = function(req, res) {
-  addPersonToSet(req, res, 'invitation_attending');
+exports.accept = function(req, res) {
+  addPersonToSet(req, res, 'invitation_attending', function() {
+    res.redirect('/invite/' + req.params.id);
+  });
 };
 
 exports.decline = function(req, res) {
@@ -14,18 +16,28 @@ exports.decline = function(req, res) {
 };
 
 exports.invite = function(req, res) {
-  res.render('invite.ejs', { 'id': req.params.id });
+  client.smembers('invitation_attending', function(e1, attending) {
+    client.smembers('invitation_declined', function(e2, declined) {
+      client.smembers('invitation_awaiting', function(e3, awaiting) {
+        res.render('invite', { 'id': req.params.id, 'attending': attending, 'declined': declined, 'awaiting': awaiting});
+      });
+    }); 
+  });
 };
 
-function addPersonToSet(req, res, set) {
-  var id = req.body.id;
+function addPersonToSet(req, res, set, cb) {
+  var id = req.params.id;
   client.get('invitation_id_' + id, function(e1, email) {
-    if (err || email == null)
-      res.redirect('/');  
+    if (e1 || email == null)
+      res.redirect('/invite/' + id);  
     else {
       client.get('invitation_email_' + email, function(e2, name) {
         client.sadd(set, name, function(e3) {
-          client.del('invitation_id_' + id);
+          client.del('invitation_id_' + id, function(e4) {
+            client.srem('invitation_awaiting', name, function(e5) {
+              
+            });
+          });
         });
       });
     } 
