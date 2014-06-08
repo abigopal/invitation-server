@@ -10,6 +10,10 @@
         <input type='Submit' value='Accept' />
       </form>
 
+      <form action='/invite/decline/<%= id %>' method='post'>
+        <input type='Submit' value='Decline' />
+      </form>
+
       <h2> Attending </h2>
       <table>
         <% for( var i = 0; i < attending.length; i += 3 ) { %>

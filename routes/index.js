@@ -12,7 +12,9 @@ exports.accept = function(req, res) {
 };
 
 exports.decline = function(req, res) {
-  addPersonToSet(req, res, 'invitation_declined');
+  addPersonToSet(req, res, 'invitation_declined', function() {
+    res.redirect('/invite/' + req.params.id);  
+  });
 };
 
 exports.invite = function(req, res) {
@@ -35,7 +37,7 @@ function addPersonToSet(req, res, set, cb) {
         client.sadd(set, name, function(e3) {
           client.del('invitation_id_' + id, function(e4) {
             client.srem('invitation_awaiting', name, function(e5) {
-              
+             cb(); 
             });
           });
         });

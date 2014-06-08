@@ -10,6 +10,15 @@ client.on("error", function (err) {
 });
 
 var raw_text = fs.readFileSync(config.guest_list).toString();
+
+var previous_output = [];
+
+try {
+  previous_output = JSON.parse(fs.readFileSync('../output.json').toString());
+}
+catch(err) {
+}
+
 var people_list = raw_text.split('\n');
 var people = [];
 
@@ -22,6 +31,9 @@ for (var i in people_list) {
     last_name: person_data[1],
     email: person_data[2],
   };
+  
+  if (alreadyInvited(person.email))
+    continue; 
 
   var shasum = crypto.createHash('sha1');
   var hash = person.email + config.secret_salt;
@@ -40,6 +52,14 @@ for (var i in people_list) {
   people.push(person);
 }
 
-fs.writeFileSync('../output.json', JSON.stringify(people));
+fs.writeFileSync('../output.json', JSON.stringify(previous_output.concat(people)));
 
 client.quit();
+
+function alreadyInvited(email) {
+  for (var i in previous_output) {
+    if (previous_output[i].email == email)
+      return true;
+  }
+  return false;
+}

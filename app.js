@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(app.router);
 
 app.get('/invite/:id', router.invite);
+app.get('/invite/thanks', router.invite);
 app.post('/invite/accept/:id', router.accept);
 app.post('/invite/decline/:id', router.decline);
 
