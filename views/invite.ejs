@@ -1,24 +1,39 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Invite</title>
+    <title> Invite </title>
     <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css' />
   </head>
   <body>
-    <p> 
-      <form action='/invite/accept/<%= id %>' method='post'>
-        <input type='Submit' value='Accept' />
-      </form>
+    <div id='container'>
+      <% if (invite) { %>
+        <h1> Abi's Graduation Party Invite! </h1>
+        <p>If you clicked this link from an invitation email, go ahead and click one of the two buttons. Don't worry, I know who you are.</p>
+        <p> <strong>Note:</strong> If when you've rather accepted or declined you cannot switch on this site! Just email me, and I'll make the correction.</p>
 
-      <form action='/invite/decline/<%= id %>' method='post'>
-        <input type='Submit' value='Decline' />
-      </form>
+        <br />
 
-      <h2> Attending </h2>
-      <table>
-        <% for( var i = 0; i < attending.length; i += 3 ) { %>
+        <form action='/invite/accept/<%= id %>' method='post' style='display:inline;'>
+          <input type='Submit' value='Accept' />
+        </form>
+
+        <form action='/invite/decline/<%= id %>' method='post' style='display:inline;'>
+          <input type='Submit' value='Decline' />
+        </form>
+
+       <br />
+       <br />
+       <br />
+
+      <% } %>
+       
+      <h2> ATTENDING </h2>
+      <span style="color:green"> --------------------------- </span>
+      <table align="center">
+        <% for( var i = 0; i < attending.length; i += 5 ) { %>
           <tr> 
-            <% for( var j = i; j < i + 3; j++ ) { %>
+            <% for( var j = i; j < i + 5; j++ ) { %>
               <% if ( attending[j] != null ) {  %>
                 <td><%= attending[j] %></td>
               <% }; %>
@@ -27,11 +42,16 @@
         <% }; %> 
      </table>
 
-      <h2> Declined </h2>
-      <table>
-        <% for( var i = 0; i < declined.length; i += 3 ) { %>
+     <br />
+     <br />
+     <br />
+
+      <h2> DECLINED </h2>
+      <span style="color:red"> ----------------------- </span>
+      <table align="center">
+        <% for( var i = 0; i < declined.length; i += 5 ) { %>
           <tr> 
-            <% for( var j = i; j < i + 3; j++ ) { %>
+            <% for( var j = i; j < i + 5; j++ ) { %>
               <% if ( declined[j] != null ) {  %>
                 <td><%= declined[j] %></td>
               <% }; %>
@@ -40,20 +60,24 @@
         <% }; %> 
      </table>
 
-     <h2> Awaiting </h2>
-      <table>
-        <% for( var i = 0; i < awaiting.length; i += 3 ) { %>
-          <tr> 
-            <% for( var j = i; j < i + 3; j++ ) { %>
-              <% if ( awaiting[j] != null ) {  %>
-                <td><%= awaiting[j] %></td>
-              <% }; %>
-            <% }; %>
-          </tr>
-        <% }; %> 
-     </table>
+     <br />
+     <br />
+     <br />
 
-    </p> 
+     <h2> AWAITING </h2>
+     <span style="color:orange"> ------------------------- </span>
+     <table align="center">
+      <% for( var i = 0; i < awaiting.length; i += 5 ) { %>
+        <tr> 
+          <% for( var j = i; j < i + 5; j++ ) { %>
+            <% if ( awaiting[j] != null ) {  %>
+              <td><%= awaiting[j] %></td>
+            <% }; %>
+          <% }; %>
+        </tr>
+      <% }; %> 
+      </table>
+    </div>
   </body>
 </html>
 
